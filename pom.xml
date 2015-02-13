@@ -7,6 +7,17 @@
     <artifactId>isaac-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <scm>
+        <developerConnection>scm:git:ssh:csfe.aceworkspace.net:29418/va-isaac-parent.git</developerConnection>
+        <connection>scm:git:https://csfe.aceworkspace.net/gerrit/p/va-isaac-parent.git</connection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>tumalo artifactory</id>
+            <name>tumalo artifactory-releases</name>
+            <url>http://dev.informatics.com/artifactory/ext-release-local</url>
+        </repository>
+    </distributionManagement>
     <properties>
         <branch>woolsthorpe</branch>
         <hk2.version>2.4.0-b10</hk2.version>
