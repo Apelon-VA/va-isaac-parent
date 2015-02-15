@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <description>ISAAC parent pom that standardizes common dependencies and plugins for ISAAC projects</description>
     <licenses>
         <license>
