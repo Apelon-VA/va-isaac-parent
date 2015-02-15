@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
         tooling for a cohernet informatics
         architecture that builds on top of a description-logic terminology foundation.
