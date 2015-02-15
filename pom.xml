@@ -4,7 +4,11 @@
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
     <version>1.2-SNAPSHOT</version>
-    <description>ISAAC parent pom that standardizes common dependencies and plugins for ISAAC projects</description>
+    <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
+        tooling for a cohernet informatics
+        architecture that builds on top of a description-logic terminology foundation.
+        This ISAAC parent pom that standardizes common
+        dependencies and plugins for ISAAC projects. </description>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -13,6 +17,7 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+    <packaging>pom</packaging>
     <scm>
         <developerConnection>scm:git:ssh:csfe.aceworkspace.net:29418/va-isaac-parent.git</developerConnection>
         <connection>scm:git:https://csfe.aceworkspace.net/gerrit/p/va-isaac-parent.git</connection>
