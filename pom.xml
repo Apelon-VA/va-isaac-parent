@@ -37,6 +37,7 @@
         <maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
+        <slf4j.version>1.7.12</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -47,6 +48,18 @@
                 <version>2.2</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <!-- Start the transition from log4j to slf4j (which is already using in the gui packages and below) -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
@@ -113,6 +126,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--Put any slf4j logging on the console during tests-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
