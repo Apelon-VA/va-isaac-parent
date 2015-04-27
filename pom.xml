@@ -4,11 +4,14 @@
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
     <version>1.6-SNAPSHOT</version>
+    
     <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
         tooling for a coherent informatics
         architecture that builds on top of a description-logic terminology foundation.
         This ISAAC parent pom that standardizes common
-        dependencies and plugins for ISAAC projects. </description>
+        dependencies and plugins for ISAAC projects.
+    </description>
+    
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -24,8 +27,7 @@
     <packaging>pom</packaging>
 
     <scm>
-        <developerConnection>scm:git:ssh:csfe.aceworkspace.net:29418/va-isaac-parent.git</developerConnection>
-        <connection>scm:git:https://csfe.aceworkspace.net/gerrit/p/va-isaac-parent.git</connection>
+        <url>https://github.com/Apelon-VA/va-isaac-parent.git</url>
     </scm>
 
     <properties>
@@ -243,6 +245,32 @@
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.8</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.8</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.bcel</groupId>
+                            <artifactId>bcel</artifactId>
+                            <version>6.0-S</version>  <!-- This is a SNAPSHOT version that Dan installed on our Archiva server to provide Java 8 support -->
+                            <!-- See https://csfe.aceworkspace.net/sf/tracker/do/viewArtifact/projects.informatics_architecture/tracker.4_defects/artf232420 -->
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>1.1</version>
+                    <configuration>
+                        <scmBranch>gh-pages</scmBranch>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -313,7 +341,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -340,6 +367,7 @@
                 <version>${maven-javadoc-plugin.version}</version>
                 <inherited>false</inherited>
                 <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                     <!-- Disabled - not installed on CI server -->
                     <!--doclet>ydoc.doclets.YStandard</doclet>
                     <docletPath>${yDoc.path}/lib/ydoc.jar:${yDoc.path}/lib/styleed.jar:${yDoc.path}/resources</docletPath>
