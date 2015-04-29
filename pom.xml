@@ -227,6 +227,9 @@
                     <version>2.18.1</version>
                     <configuration>
                         <useFile>false</useFile> <!-- Only way to get JUnit failures on Maestrodev at the moment - errors on console, instead of file -->
+                        <systemPropertyVariables>
+                            <java.util.logging.manager>org.apache.logging.log4j.jul.LogManager</java.util.logging.manager>
+                        </systemPropertyVariables>
                     </configuration>
                 </plugin>
                 <plugin>
