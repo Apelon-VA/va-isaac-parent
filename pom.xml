@@ -3,12 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
+    
     <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
         tooling for a coherent informatics
         architecture that builds on top of a description-logic terminology foundation.
         This ISAAC parent pom that standardizes common
-        dependencies and plugins for ISAAC projects. </description>
+        dependencies and plugins for ISAAC projects.
+    </description>
+    
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -24,8 +27,7 @@
     <packaging>pom</packaging>
 
     <scm>
-        <developerConnection>scm:git:ssh:csfe.aceworkspace.net:29418/va-isaac-parent.git</developerConnection>
-        <connection>scm:git:https://csfe.aceworkspace.net/gerrit/p/va-isaac-parent.git</connection>
+        <url>https://github.com/Apelon-VA/va-isaac-parent.git</url>
     </scm>
 
     <properties>
@@ -37,8 +39,13 @@
         <maven-plugin-plugin.version>3.4</maven-plugin-plugin.version>
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
-        <slf4j.version>1.7.12</slf4j.version>
+        <maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
     </properties>
+    
+    <organization>
+        <name>U.S. Department of Veterans Affairs</name>
+        <url>www.va.gov</url>
+    </organization>
 
     <dependencyManagement>
         <dependencies>
@@ -48,18 +55,6 @@
                 <version>2.2</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-            <!-- Start the transition from log4j to slf4j (which is already using in the gui packages and below) -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
@@ -128,10 +123,20 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Put any slf4j logging on the console during tests-->
+        <!-- Route all logging into log4j2 during tests -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
+         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jul</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -184,6 +189,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>${maven-plugin-plugin.version}</version>
+                    <configuration>
+                        <!-- Deal with older (broken) versions of maven that can't find mojo code properly without help -->
+                        <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+                        <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                        <goalPrefix>${project.artifactId}</goalPrefix>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.agilejava.docbkx</groupId>
@@ -215,7 +226,10 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.18.1</version>
                     <configuration>
-                        <enableAssertions>false</enableAssertions>
+                        <useFile>false</useFile> <!-- Only way to get JUnit failures on Maestrodev at the moment - errors on console, instead of file -->
+                        <systemPropertyVariables>
+                            <java.util.logging.manager>org.apache.logging.log4j.jul.LogManager</java.util.logging.manager>
+                        </systemPropertyVariables>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -231,7 +245,38 @@
                     -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>jaxb2-maven-plugin</artifactId>
-                    <version>2.0</version>
+                    <version>1.6</version>  <!-- Their website claims 2.0 is out - but it isn't published anywhere -->
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.bcel</groupId>
+                            <artifactId>bcel</artifactId>
+                            <version>6.0-S</version>  <!-- This is a SNAPSHOT version that Dan installed on our Archiva server to provide Java 8 support -->
+                            <!-- See https://csfe.aceworkspace.net/sf/tracker/do/viewArtifact/projects.informatics_architecture/tracker.4_defects/artf232420 -->
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>1.1</version>
+                    <configuration>
+                        <scmBranch>gh-pages</scmBranch>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -303,7 +348,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8</version>
+                <version>${maven-project-info-reports-plugin.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -330,6 +375,7 @@
                 <version>${maven-javadoc-plugin.version}</version>
                 <inherited>false</inherited>
                 <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                     <!-- Disabled - not installed on CI server -->
                     <!--doclet>ydoc.doclets.YStandard</doclet>
                     <docletPath>${yDoc.path}/lib/ydoc.jar:${yDoc.path}/lib/styleed.jar:${yDoc.path}/resources</docletPath>
