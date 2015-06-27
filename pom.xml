@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     
     <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
         tooling for a coherent informatics
@@ -170,7 +170,20 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <version>2.5.5</version>
+                    <!-- These dependencies get us multi-threaded zip - which is _way_ faster -->
+                    <dependencies>  
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-archiver</artifactId>
+                            <version>2.10.3</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-io</artifactId>
+                            <version>2.6</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
