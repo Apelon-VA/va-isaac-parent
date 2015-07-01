@@ -31,7 +31,7 @@
     </scm>
 
     <properties>
-        <hk2.version>2.4.0-b15</hk2.version>
+        <hk2.version>2.4.0-b25</hk2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
