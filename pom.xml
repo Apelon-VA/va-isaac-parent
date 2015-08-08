@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.vha.isaac</groupId>
     <artifactId>isaac-parent</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
     
     <description>ISAAC: InformaticS Architecture ACceleration. ISAAC is a project to support
         tooling for a coherent informatics
@@ -31,7 +31,7 @@
     </scm>
 
     <properties>
-        <hk2.version>2.4.0-b15</hk2.version>
+        <hk2.version>2.4.0-b25</hk2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
@@ -351,6 +351,10 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
