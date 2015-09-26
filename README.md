@@ -6,4 +6,4 @@ top of a description-logic terminology foundation. This ISAAC parent pom that st
 
 
 Release Note:
-mvn jgitflow:release-start jgitflow:release-finish -DreleaseVersion=1.10 -DdevelopmentVersion=1.11-SNAPSHOT -DaltDeploymentRepository=maestro::default::https://va.maestrodev.com/archiva/repository/va-releases
+mvn jgitflow:release-start jgitflow:release-finish -DreleaseVersion=1.10 -DdevelopmentVersion=1.11-SNAPSHOT -DaltDeploymentRepository=maestro::default::https://va.maestrodev.com/archiva/repository/va-releases  -DdefaultOriginUrl=https://github.com/Apelon-VA/va-isaac-parent.git
